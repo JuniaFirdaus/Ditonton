@@ -1,11 +1,11 @@
 import 'package:core/core.dart';
-import 'package:core/presentation/widgets/movie_card_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 import 'package:search/presentation/bloc/search_bloc.dart';
 import 'package:search/presentation/bloc/search_event.dart';
 import 'package:search/presentation/bloc/search_state.dart';
+import 'package:search/presentation/widgets/search_card_list.dart';
 
 import '../provider/movie_search_notifier.dart';
 
@@ -52,7 +52,7 @@ class SearchMoviesPage extends StatelessWidget {
                       padding: const EdgeInsets.all(8),
                       itemBuilder: (context, index) {
                         final movie = result[index];
-                        return MovieCard(movie);
+                        return SearchCard(movie);
                       },
                       itemCount: result.length,
                     ),

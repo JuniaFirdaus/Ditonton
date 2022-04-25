@@ -58,6 +58,12 @@ dependencies:
   tv:
     path: tv
 
+  movies:
+    path: movies
+
+  watchlist:
+    path: watchlist
+
 dev_dependencies:
   mockito: ^5.0.8
   build_runner: ^2.0.4

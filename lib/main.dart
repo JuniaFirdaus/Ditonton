@@ -1,21 +1,16 @@
 import 'package:about/about_page.dart';
 import 'package:core/core.dart';
-import 'package:core/presentation/pages/movie/home_movie_page.dart';
-import 'package:core/presentation/pages/movie/movie_detail_page.dart';
-import 'package:core/presentation/pages/movie/popular_movies_page.dart';
-import 'package:core/presentation/pages/movie/top_rated_movies_page.dart';
-import 'package:core/presentation/pages/movie/watchlist_movies_page.dart';
-import 'package:core/presentation/pages/watchlist_page.dart';
-import 'package:core/presentation/provider/movie/movie_detail_notifier.dart';
-import 'package:core/presentation/provider/movie/movie_list_notifier.dart';
-import 'package:core/presentation/provider/movie/popular_movies_notifier.dart';
-import 'package:core/presentation/provider/movie/top_rated_movies_notifier.dart';
-import 'package:core/presentation/provider/movie/watchlist_movie_notifier.dart';
 import 'package:core/utils/utils.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:movies/movies.dart';
+import 'package:movies/presentation/pages/home_movie_page.dart';
+import 'package:movies/presentation/pages/movie_detail_page.dart';
+import 'package:movies/presentation/pages/popular_movies_page.dart';
+import 'package:movies/presentation/pages/top_rated_movies_page.dart';
+import 'package:movies/presentation/pages/watchlist_movies_page.dart';
 import 'package:provider/provider.dart';
 import 'package:ditonton/injection.dart' as di;
 import 'package:search/presentation/bloc/search_bloc.dart';
@@ -33,6 +28,7 @@ import 'package:tv/presentation/provider/tv_detail_notifier.dart';
 import 'package:tv/presentation/provider/tv_list_notifier.dart';
 import 'package:tv/presentation/provider/tv_search_notifier.dart';
 import 'package:tv/presentation/provider/watchlist_tv_notifier.dart';
+import 'package:watchlist/presentation/pages/watchlist_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
