@@ -1,11 +1,13 @@
 import 'dart:async';
-import 'package:sqflite/sqflite.dart';
+import 'package:core/utils/encrypt.dart';
+import 'package:sqflite_sqlcipher/sqflite.dart';
 
 import '../../models/movie/movie_table.dart';
 import '../../models/tv/tv_table.dart';
 
 class DatabaseHelper {
   static DatabaseHelper? _databaseHelper;
+
   DatabaseHelper._instance() {
     _databaseHelper = this;
   }
@@ -30,7 +32,8 @@ class DatabaseHelper {
     final path = await getDatabasesPath();
     final databasePath = '$path/ditonton.db';
 
-    var db = await openDatabase(databasePath, version: 7, onCreate: _onCreate);
+    var db = await openDatabase(databasePath,
+        version: 7, onCreate: _onCreate, password: encrypt('d!c0d!n9'));
     return db;
   }
 
@@ -72,7 +75,6 @@ class DatabaseHelper {
         category TEXT
       );
     ''');
-
   }
 
   //Movie
@@ -89,7 +91,6 @@ class DatabaseHelper {
       whereArgs: [movie.id],
     );
   }
-
 
   Future<Map<String, dynamic>?> getMovieById(int id) async {
     final db = await database;
@@ -108,7 +109,8 @@ class DatabaseHelper {
 
   Future<List<Map<String, dynamic>>> getWatchlistMovies() async {
     final db = await database;
-    final List<Map<String, dynamic>> results = await db!.query(_tblMovieWatchlist);
+    final List<Map<String, dynamic>> results =
+        await db!.query(_tblMovieWatchlist);
 
     return results;
   }
@@ -161,6 +163,7 @@ class DatabaseHelper {
       }
     });
   }
+
   Future<List<Map<String, dynamic>>> getCacheMovies(String category) async {
     final db = await database;
     final List<Map<String, dynamic>> results = await db!.query(
@@ -192,6 +195,7 @@ class DatabaseHelper {
       }
     });
   }
+
   Future<List<Map<String, dynamic>>> getCacheTv(String category) async {
     final db = await database;
     final List<Map<String, dynamic>> results = await db!.query(
@@ -210,5 +214,4 @@ class DatabaseHelper {
       whereArgs: [category],
     );
   }
-
 }
