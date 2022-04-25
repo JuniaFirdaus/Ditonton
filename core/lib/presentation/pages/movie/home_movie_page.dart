@@ -6,7 +6,6 @@ import 'package:provider/provider.dart';
 
 import '../../../domain/entities/movie/movie_entity.dart';
 import '../../provider/movie/movie_list_notifier.dart';
-import '../tv/home_tv_page.dart';
 import '../watchlist_page.dart';
 import 'movie_detail_page.dart';
 import 'popular_movies_page.dart';
@@ -52,7 +51,7 @@ class _HomeMoviePageState extends State<HomeMoviePage> {
               leading: Icon(Icons.tv),
               title: Text('Tv'),
               onTap: () {
-               Navigator.pushNamed(context, HomeTvPage.ROUTE_NAME);
+               Navigator.pushNamed(context, TV_ROUTE);
               },
             ),
             ListTile(

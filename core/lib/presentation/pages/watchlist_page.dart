@@ -9,7 +9,6 @@ import 'package:provider/provider.dart';
 import '../provider/movie/watchlist_movie_notifier.dart';
 import '../widgets/PlatformWidget.dart';
 import 'movie/watchlist_movies_page.dart';
-import 'tv/watchlist_tv_page.dart';
 
 class WatchlistPage extends StatefulWidget {
   static const ROUTE_NAME = '/watchlist';
