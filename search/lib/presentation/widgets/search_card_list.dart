@@ -1,13 +1,14 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:core/core.dart';
-import 'package:core/domain/entities/movie/movie_entity.dart';
 import 'package:core/utils/routes.dart';
 import 'package:flutter/material.dart';
 
 class SearchCard extends StatelessWidget {
-  final MovieEntity movie;
+  final dynamic item;
+  final bool isSearchMovies;
 
-  SearchCard(this.movie);
+  const SearchCard(this.item, {Key? key, required this.isSearchMovies})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -15,11 +16,19 @@ class SearchCard extends StatelessWidget {
       margin: const EdgeInsets.symmetric(vertical: 4),
       child: InkWell(
         onTap: () {
-          Navigator.pushNamed(
-            context,
-            MOVIE_DETAIL_ROUTE,
-            arguments: movie.id,
-          );
+          if (isSearchMovies) {
+            Navigator.pushNamed(
+              context,
+              MOVIE_DETAIL_ROUTE,
+              arguments: item.id,
+            );
+          } else {
+            Navigator.pushNamed(
+              context,
+              TV_DETAIL_ROUTE,
+              arguments: item.id,
+            );
+          }
         },
         child: Stack(
           alignment: Alignment.bottomLeft,
@@ -35,14 +44,14 @@ class SearchCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      movie.title ?? '-',
+                      isSearchMovies ? item.title : item.name,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: kHeading6,
                     ),
-                    SizedBox(height: 16),
+                    const SizedBox(height: 16),
                     Text(
-                      movie.overview ?? '-',
+                      item.overview ?? '-',
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -57,14 +66,14 @@ class SearchCard extends StatelessWidget {
               ),
               child: ClipRRect(
                 child: CachedNetworkImage(
-                  imageUrl: '$BASE_IMAGE_URL${movie.posterPath}',
+                  imageUrl: '$BASE_IMAGE_URL${item.posterPath}',
                   width: 80,
-                  placeholder: (context, url) => Center(
+                  placeholder: (context, url) => const Center(
                     child: CircularProgressIndicator(),
                   ),
-                  errorWidget: (context, url, error) => Icon(Icons.error),
+                  errorWidget: (context, url, error) => const Icon(Icons.error),
                 ),
-                borderRadius: BorderRadius.all(Radius.circular(8)),
+                borderRadius: const BorderRadius.all(Radius.circular(8)),
               ),
             ),
           ],

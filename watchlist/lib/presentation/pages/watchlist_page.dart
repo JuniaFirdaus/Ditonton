@@ -5,15 +5,18 @@ import 'package:core/presentation/widgets/PlatformWidget.dart';
 import 'package:core/utils/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:movies/movies.dart';
+import 'package:movies/presentation/bloc/watchlist/watchlist_event.dart';
+import 'package:movies/presentation/bloc/watchlist/watchlist_movies_bloc.dart';
 import 'package:movies/presentation/pages/watchlist_movies_page.dart';
 import 'package:provider/provider.dart';
+import 'package:tv/presentation/bloc/watchlist/watchlist_event.dart';
+import 'package:tv/presentation/bloc/watchlist/watchlist_tv_bloc.dart';
 import 'package:tv/presentation/pages/watchlist_tv_page.dart';
 
 class WatchlistPage extends StatefulWidget {
   static const ROUTE_NAME = '/watchlist';
 
-  WatchlistPage({Key? key}) : super(key: key);
+  const WatchlistPage({Key? key}) : super(key: key);
 
   @override
   _WatchlistPage createState() => _WatchlistPage();
@@ -26,8 +29,8 @@ class _WatchlistPage extends State<WatchlistPage> with RouteAware {
   void initState() {
     super.initState();
     Future.microtask(() =>
-        Provider.of<WatchlistMovieNotifier>(context, listen: false)
-            .fetchWatchlistMovies());
+        context.read<WatchlistMoviesBloc>().add(WatchlistMovies())
+    );
   }
 
   @override
@@ -36,19 +39,22 @@ class _WatchlistPage extends State<WatchlistPage> with RouteAware {
     routeObserver.subscribe(this, ModalRoute.of(context)!);
   }
 
+  @override
   void didPopNext() {
-    Provider.of<WatchlistMovieNotifier>(context, listen: false)
-        .fetchWatchlistMovies();
+    context.read<WatchlistMoviesBloc>().add(WatchlistMovies());
+    context.read<WatchlistTvBloc>().add(WatchlistTv());
   }
 
   final List<Widget> _listWidget = [
-    WatchlistMoviesPage(),
-    WatchlistTvPage(),
+    const WatchlistMoviesPage(),
+    const WatchlistTvPage(),
   ];
 
   final List<BottomNavigationBarItem> _bottomNavBarItems = [
     BottomNavigationBarItem(
-      icon: Icon(Platform.isIOS ? CupertinoIcons.play_rectangle : Icons.movie_creation_outlined),
+      icon: Icon(Platform.isIOS
+          ? CupertinoIcons.play_rectangle
+          : Icons.movie_creation_outlined),
       label: 'Movies',
     ),
     BottomNavigationBarItem(
@@ -66,7 +72,7 @@ class _WatchlistPage extends State<WatchlistPage> with RouteAware {
   Widget _buildAndroid(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Favorite'),
+        title: const Text('Favorite'),
       ),
       body: _listWidget[_bottomNavIndex],
       bottomNavigationBar: BottomNavigationBar(
@@ -81,7 +87,10 @@ class _WatchlistPage extends State<WatchlistPage> with RouteAware {
 
   Widget _buildIos(BuildContext context) {
     return CupertinoTabScaffold(
-      tabBar: CupertinoTabBar(items: _bottomNavBarItems, activeColor: kMikadoYellow, inactiveColor: kDavysGrey),
+      tabBar: CupertinoTabBar(
+          items: _bottomNavBarItems,
+          activeColor: kMikadoYellow,
+          inactiveColor: kDavysGrey),
       tabBuilder: (context, index) {
         return _listWidget[index];
       },

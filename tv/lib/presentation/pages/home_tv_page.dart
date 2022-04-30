@@ -1,17 +1,25 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:core/core.dart';
 import 'package:core/domain/entities/tv/tv_entity.dart';
+import 'package:core/utils/routes.dart';
+import 'package:core/utils/state_request.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tv/presentation/bloc/nowplaying/now_playing_tv_bloc.dart';
+import 'package:tv/presentation/bloc/popular/popular_tv_bloc.dart';
+import 'package:tv/presentation/bloc/toprated/top_rated_tv_bloc.dart';
 import 'package:tv/presentation/pages/popular_tv_page.dart';
-import 'package:tv/presentation/pages/search_tv_page.dart';
 import 'package:tv/presentation/pages/top_rated_tv_page.dart';
 import 'package:tv/presentation/pages/tv_detail_page.dart';
 
-import '../provider/tv_list_notifier.dart';
+import '../bloc/nowplaying/now_playing_event.dart';
+import '../bloc/popular/popular_event.dart';
+import '../bloc/toprated/top_rated_event.dart';
 
 class HomeTvPage extends StatefulWidget {
   static const ROUTE_NAME = '/home-tv';
+
+  const HomeTvPage({Key? key}) : super(key: key);
 
   @override
   _HomeTvPageState createState() => _HomeTvPageState();
@@ -21,23 +29,24 @@ class _HomeTvPageState extends State<HomeTvPage> {
   @override
   void initState() {
     super.initState();
-    Future.microtask(() => Provider.of<TvListNotifier>(context, listen: false)
-      ..fetchNowPlayingTv()
-      ..fetchPopularTv()
-      ..fetchTopRatedTv());
+    Future.microtask(() {
+      context.read<NowPlayingTvBloc>().add(NowPlayingTv());
+      context.read<PopularTvBloc>().add(PopularTv());
+      context.read<TopRatedTvBloc>().add(TopRatedTv());
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Popular Tv'),
+        title: const Text('Tv'),
         actions: [
           IconButton(
             onPressed: () {
-              Navigator.pushNamed(context, SearchTvPage.ROUTE_NAME);
+              Navigator.pushNamed(context, SEARCH_ROUTE, arguments: false);
             },
-            icon: Icon(Icons.search),
+            icon: const Icon(Icons.search),
           )
         ],
       ),
@@ -51,18 +60,16 @@ class _HomeTvPageState extends State<HomeTvPage> {
                   'Airing today',
                   style: kHeading6,
                 ),
-                Consumer<TvListNotifier>(builder: (context, data, child) {
-                  if (data.nowPlayingState == RequestState.Loading) {
-                    return Center(
+                BlocBuilder<NowPlayingTvBloc, StateRequest>(
+                    builder: (context, state) {
+                  if (state is Loading) {
+                    return const Center(
                       child: CircularProgressIndicator(),
                     );
-                  } else if (data.nowPlayingState == RequestState.Loaded) {
-                    return TvList(data.nowPlayingTv);
+                  } else if (state is HasData) {
+                    return TvList(state.result);
                   } else {
-                    return Center(
-                      key: Key('error_message'),
-                      child: Text(data.message),
-                    );
+                    return Container();
                   }
                 }),
                 _buildSubHeading(
@@ -70,18 +77,20 @@ class _HomeTvPageState extends State<HomeTvPage> {
                   onTap: () =>
                       Navigator.pushNamed(context, PopularTvPage.ROUTE_NAME),
                 ),
-                Consumer<TvListNotifier>(builder: (context, data, child) {
-                  if (data.popularTvState == RequestState.Loading) {
-                    return Center(
+                BlocBuilder<PopularTvBloc, StateRequest>(
+                    builder: (context, state) {
+                  if (state is Loading) {
+                    return const Center(
                       child: CircularProgressIndicator(),
                     );
-                  } else if (data.popularTvState == RequestState.Loaded) {
-                    return TvList(data.popularTv);
-                  } else {
+                  } else if (state is HasData) {
+                    return TvList(state.result);
+                  } else if (state is Error) {
                     return Center(
-                      key: Key('error_message'),
-                      child: Text(data.message),
+                      child: Text(state.message, key: const Key('error')),
                     );
+                  } else {
+                    return const Text('Failed');
                   }
                 }),
                 _buildSubHeading(
@@ -89,18 +98,16 @@ class _HomeTvPageState extends State<HomeTvPage> {
                   onTap: () =>
                       Navigator.pushNamed(context, TopRatedTvPage.ROUTE_NAME),
                 ),
-                Consumer<TvListNotifier>(builder: (context, data, child) {
-                  if (data.topRatedTvState == RequestState.Loading) {
-                    return Center(
+                BlocBuilder<TopRatedTvBloc, StateRequest>(
+                    builder: (context, state) {
+                  if (state is Loading) {
+                    return const Center(
                       child: CircularProgressIndicator(),
                     );
-                  } else if (data.topRatedTvState == RequestState.Loaded) {
-                    return TvList(data.topRatedTv);
+                  } else if (state is HasData) {
+                    return TvList(state.result);
                   } else {
-                    return Center(
-                      key: Key('error_message'),
-                      child: Text(data.message),
-                    );
+                    return Container();
                   }
                 }),
               ]),
@@ -122,7 +129,7 @@ class _HomeTvPageState extends State<HomeTvPage> {
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Row(
-              children: [Text('See More'), Icon(Icons.arrow_forward_ios)],
+              children: const [Text('See More'), Icon(Icons.arrow_forward_ios)],
             ),
           ),
         ),
@@ -134,11 +141,11 @@ class _HomeTvPageState extends State<HomeTvPage> {
 class TvList extends StatelessWidget {
   final List<TvEntity> tv;
 
-  TvList(this.tv);
+  const TvList(this.tv, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: 200,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
@@ -155,13 +162,13 @@ class TvList extends StatelessWidget {
                 );
               },
               child: ClipRRect(
-                borderRadius: BorderRadius.all(Radius.circular(16)),
+                borderRadius: const BorderRadius.all(Radius.circular(16)),
                 child: CachedNetworkImage(
                   imageUrl: '$BASE_IMAGE_URL${item.posterPath}',
-                  placeholder: (context, url) => Center(
+                  placeholder: (context, url) => const Center(
                     child: CircularProgressIndicator(),
                   ),
-                  errorWidget: (context, url, error) => Icon(Icons.error),
+                  errorWidget: (context, url, error) => const Icon(Icons.error),
                 ),
               ),
             ),
