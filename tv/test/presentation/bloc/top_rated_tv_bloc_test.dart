@@ -24,7 +24,7 @@ void main() {
   });
 
   final tTv = TvEntity(
-    genreIds: [1, 2, 3],
+    genreIds: const [1, 2, 3],
     id: 1,
     name: 'name',
     originalName: 'originalName',
@@ -57,13 +57,13 @@ void main() {
     'Should emit [Loading, Error] when get search is unsuccessful',
     build: () {
       when(mockGetTopRatedTv.execute())
-          .thenAnswer((_) async => Left(ServerFailure('Server Failure')));
+          .thenAnswer((_) async => const Left(ServerFailure('Server Failure')));
       return topRatedTvBloc;
     },
     act: (bloc) => bloc.add(TopRatedTv()),
     expect: () => [
       Loading(),
-      Error('Server Failure'),
+      const Error('Server Failure'),
     ],
     verify: (bloc) {
       verify(mockGetTopRatedTv.execute());

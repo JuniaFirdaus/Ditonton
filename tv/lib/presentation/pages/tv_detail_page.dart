@@ -14,7 +14,7 @@ import 'package:tv/presentation/bloc/watchlist/watchlist_event.dart';
 import 'package:tv/presentation/bloc/watchlist/watchlist_tv_bloc.dart';
 
 class TvDetailPage extends StatefulWidget {
-  static const ROUTE_NAME = '/tv-detail';
+  static const routeName = '/tv-detail';
 
   final int id;
 
@@ -217,7 +217,7 @@ class DetailContent extends StatelessWidget {
                                             onTap: () {
                                               Navigator.pushReplacementNamed(
                                                 context,
-                                                TvDetailPage.ROUTE_NAME,
+                                                TvDetailPage.routeName,
                                                 arguments: movie.id,
                                               );
                                             },

@@ -58,19 +58,19 @@ class _HomeMoviePageState extends State<HomeMoviePage> {
               leading: const Icon(Icons.tv),
               title: const Text('Tv'),
               onTap: () {
-                Navigator.pushNamed(context, TV_ROUTE);
+                Navigator.pushNamed(context, tvRoute);
               },
             ),
             ListTile(
               leading: const Icon(Icons.save_alt),
               title: const Text('Watchlist'),
               onTap: () {
-                Navigator.pushNamed(context, WATCHLIST_ROUTE);
+                Navigator.pushNamed(context, watchlistRoute);
               },
             ),
             ListTile(
               onTap: () {
-                Navigator.pushNamed(context, ABOUT_ROUTE);
+                Navigator.pushNamed(context, aboutRoute);
               },
               leading: const Icon(Icons.info_outline),
               title: const Text('About'),
@@ -83,7 +83,7 @@ class _HomeMoviePageState extends State<HomeMoviePage> {
         actions: [
           IconButton(
             onPressed: () {
-              Navigator.pushNamed(context, SEARCH_ROUTE, arguments: true);
+              Navigator.pushNamed(context, searchRoute, arguments: true);
             },
             icon: const Icon(Icons.search),
           )
@@ -115,7 +115,7 @@ class _HomeMoviePageState extends State<HomeMoviePage> {
               _buildSubHeading(
                 title: 'Popular',
                 onTap: () =>
-                    Navigator.pushNamed(context, PopularMoviesPage.ROUTE_NAME),
+                    Navigator.pushNamed(context, PopularMoviesPage.routeName),
               ),
               BlocBuilder<PopularMoviesBloc, StateRequest>(
                   builder: (context, state) {
@@ -133,7 +133,7 @@ class _HomeMoviePageState extends State<HomeMoviePage> {
               _buildSubHeading(
                 title: 'Top Rated',
                 onTap: () =>
-                    Navigator.pushNamed(context, TopRatedMoviesPage.ROUTE_NAME),
+                    Navigator.pushNamed(context, TopRatedMoviesPage.routeName),
               ),
               BlocBuilder<TopRatedMoviesBloc, StateRequest>(
                   builder: (context, state) {
@@ -196,14 +196,14 @@ class MovieList extends StatelessWidget {
               onTap: () {
                 Navigator.pushNamed(
                   context,
-                  MovieDetailPage.ROUTE_NAME,
+                  MovieDetailPage.routeName,
                   arguments: movie.id,
                 );
               },
               child: ClipRRect(
                 borderRadius: const BorderRadius.all(Radius.circular(16)),
                 child: CachedNetworkImage(
-                  imageUrl: '$BASE_IMAGE_URL${movie.posterPath}',
+                  imageUrl: '$baseImageUrl${movie.posterPath}',
                   placeholder: (context, url) => const Center(
                     child: CircularProgressIndicator(),
                   ),

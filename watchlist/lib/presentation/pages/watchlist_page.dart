@@ -14,7 +14,7 @@ import 'package:tv/presentation/bloc/watchlist/watchlist_tv_bloc.dart';
 import 'package:tv/presentation/pages/watchlist_tv_page.dart';
 
 class WatchlistPage extends StatefulWidget {
-  static const ROUTE_NAME = '/watchlist';
+  static const routeName = '/watchlist';
 
   const WatchlistPage({Key? key}) : super(key: key);
 

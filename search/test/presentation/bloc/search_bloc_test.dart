@@ -25,7 +25,7 @@ void main() {
   final tMovieModel = MovieEntity(
     adult: false,
     backdropPath: '/muth4OYamXf41G2evdrLEg8d3om.jpg',
-    genreIds: [14, 28],
+    genreIds: const [14, 28],
     id: 557,
     originalTitle: 'Spider-Man',
     overview:
@@ -39,7 +39,7 @@ void main() {
     voteCount: 13507,
   );
   final tMovieList = <MovieEntity>[tMovieModel];
-  final tQuery = 'spiderman';
+  const tQuery = 'spiderman';
 
   test('initial state should be empty', () {
     expect(searchBloc.state, Empty());
@@ -52,7 +52,7 @@ void main() {
           .thenAnswer((_) async => Right(tMovieList));
       return searchBloc;
     },
-    act: (bloc) => bloc.add(OnQueryChanged(tQuery)),
+    act: (bloc) => bloc.add(const OnQueryChanged(tQuery)),
     wait: const Duration(milliseconds: 500),
     expect: () => [
       Loading(),
@@ -67,14 +67,14 @@ void main() {
     'Should emit [Loading, Error] when get search is unsuccessful',
     build: () {
       when(mockSearchMovies.execute(tQuery))
-          .thenAnswer((_) async => Left(ServerFailure('Server Failure')));
+          .thenAnswer((_) async => const Left(ServerFailure('Server Failure')));
       return searchBloc;
     },
-    act: (bloc) => bloc.add(OnQueryChanged(tQuery)),
+    act: (bloc) => bloc.add(const OnQueryChanged(tQuery)),
     wait: const Duration(milliseconds: 500),
     expect: () => [
       Loading(),
-      Error('Server Failure'),
+      const Error('Server Failure'),
     ],
     verify: (bloc) {
       verify(mockSearchMovies.execute(tQuery));

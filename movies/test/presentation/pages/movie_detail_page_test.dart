@@ -81,7 +81,7 @@ void main() {
   testWidgets(
       'Watchlist button should display add icon when Movies not added to watchlist',
       (WidgetTester tester) async {
-    when(() => fakeDetailMoviesBloc.state).thenReturn(HasData(testMovieDetail));
+    when(() => fakeDetailMoviesBloc.state).thenReturn(const HasData(testMovieDetail));
 
     when(() => fakeWatchlistMoviesBloc.state)
         .thenReturn(const HasStatus(false));
@@ -99,7 +99,7 @@ void main() {
   testWidgets(
       'Watchlist button should dispay check icon when Movies is added to wathclist',
       (WidgetTester tester) async {
-    when(() => fakeDetailMoviesBloc.state).thenReturn(HasData(testMovieDetail));
+    when(() => fakeDetailMoviesBloc.state).thenReturn(const HasData(testMovieDetail));
     when(() => fakeWatchlistMoviesBloc.state).thenReturn(const HasStatus(true));
     when(() => fakeRecommendationMoviesBloc.state)
         .thenReturn(HasData(testMovieList));
@@ -112,7 +112,7 @@ void main() {
   testWidgets(
       'Watchlist button should display Snackbar when added to watchlist',
       (WidgetTester tester) async {
-    when(() => fakeDetailMoviesBloc.state).thenReturn(HasData(testMovieDetail));
+    when(() => fakeDetailMoviesBloc.state).thenReturn(const HasData(testMovieDetail));
 
     when(() => fakeRecommendationMoviesBloc.state)
         .thenReturn(HasData(testMovieList));

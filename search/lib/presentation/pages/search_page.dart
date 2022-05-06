@@ -9,7 +9,7 @@ import 'package:search/presentation/bloc/search_event.dart';
 import 'package:search/presentation/widgets/search_card_list.dart';
 
 class SearchPage extends StatelessWidget {
-  static const ROUTE_NAME = '/search';
+  static const routeName = '/search';
 
   final bool isSearchMovies;
 

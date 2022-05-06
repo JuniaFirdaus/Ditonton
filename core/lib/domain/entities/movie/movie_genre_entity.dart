@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 
 class MovieGenreEntity extends Equatable {
-  MovieGenreEntity({
+  const MovieGenreEntity({
     required this.id,
     required this.name,
   });

@@ -7,7 +7,7 @@ import 'package:tv/presentation/widgets/tv_card_list.dart';
 
 
 class WatchlistTvPage extends StatefulWidget {
-  static const ROUTE_NAME = '/watchlist-tv';
+  static const routeName = '/watchlist-tv';
 
   const WatchlistTvPage({Key? key}) : super(key: key);
 

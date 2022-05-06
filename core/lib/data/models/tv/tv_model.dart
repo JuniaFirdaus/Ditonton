@@ -53,15 +53,15 @@ class TvModel extends Equatable {
 
   TvEntity toEntity() {
     return TvEntity(
-      genreIds: this.genreIds,
-      id: this.id,
-      name: this.name,
-      originalName: this.originalName,
-      overview: this.overview,
-      popularity: this.popularity,
-      posterPath: this.posterPath ?? "",
-      voteAverage: this.voteAverage,
-      voteCount: this.voteCount,
+      genreIds: genreIds,
+      id: id,
+      name: name,
+      originalName: originalName,
+      overview: overview,
+      popularity: popularity,
+      posterPath: posterPath ?? "",
+      voteAverage: voteAverage,
+      voteCount: voteCount,
     );
   }
 

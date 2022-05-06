@@ -3,7 +3,7 @@ import 'package:equatable/equatable.dart';
 import 'movie_genre_entity.dart';
 
 class MovieDetailEntity extends Equatable {
-  MovieDetailEntity({
+  const MovieDetailEntity({
     required this.adult,
     required this.backdropPath,
     required this.genres,

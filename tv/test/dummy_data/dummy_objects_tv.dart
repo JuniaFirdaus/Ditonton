@@ -6,7 +6,7 @@ import 'package:core/domain/entities/tv/tv_entity.dart';
 import 'package:core/domain/entities/tv/tv_genre_entity.dart';
 
 final tTvModel = TvModel(
-  genreIds: [10759, 10765],
+  genreIds: const [10759, 10765],
   id: 52814,
   name: 'Halo',
   originalName: 'Halo',
@@ -19,7 +19,7 @@ final tTvModel = TvModel(
 );
 
 final tTv = TvEntity(
-  genreIds: [10759, 10765],
+  genreIds: const [10759, 10765],
   id: 52814,
   name: 'Halo',
   originalName: 'Halo',
@@ -32,7 +32,7 @@ final tTv = TvEntity(
 );
 
 final testTv = TvEntity(
-  genreIds: [10759, 10765],
+  genreIds: const [10759, 10765],
   id: 52814,
   name: 'Halo',
   originalName: 'Halo',
@@ -49,7 +49,7 @@ final testTvList = [testTv];
 final testTvDetail = TvDetailEntity(
   adult: false,
   backdropPath: 'backdropPath',
-  genres: [TvGenreEntity(id: 1, name: 'Action')],
+  genres: [const TvGenreEntity(id: 1, name: 'Action')],
   id: 1,
   name: 'name',
   numberOfEpisodes: 1,
@@ -69,7 +69,7 @@ final testWatchlistTv = TvEntity.watchlist(
   name: 'name',
 );
 
-final testTvTable = TvTable(
+const testTvTable = TvTable(
   id: 1,
   name: 'name',
   posterPath: 'posterPath',
@@ -83,7 +83,7 @@ final testTvMap = {
   'name': 'name',
 };
 
-final testTvCache = TvTable(
+const testTvCache = TvTable(
   id: 52814,
   name: 'Halo',
   posterPath: '/nJUHX3XL1jMkk8honUZnUmudFb9.jpg',

@@ -25,7 +25,7 @@ void main() {
   final tMovie = MovieEntity(
     adult: false,
     backdropPath: '/muth4OYamXf41G2evdrLEg8d3om.jpg',
-    genreIds: [14, 28],
+    genreIds: const [14, 28],
     id: 557,
     originalTitle: 'Spider-Man',
     overview:
@@ -62,13 +62,13 @@ void main() {
     'Should emit [Loading, Error] when get search is unsuccessful',
     build: () {
       when(mockGetTopRatedMovies.execute())
-          .thenAnswer((_) async => Left(ServerFailure('Server Failure')));
+          .thenAnswer((_) async => const Left(ServerFailure('Server Failure')));
       return topRatedTvBloc;
     },
     act: (bloc) => bloc.add(TopRatedMovies()),
     expect: () => [
       Loading(),
-      Error('Server Failure'),
+      const Error('Server Failure'),
     ],
     verify: (bloc) {
       verify(mockGetTopRatedMovies.execute());

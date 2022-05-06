@@ -3,7 +3,7 @@ import 'package:equatable/equatable.dart';
 import '../../../domain/entities/movie/movie_genre_entity.dart';
 
 class MovieGenreModel extends Equatable {
-  MovieGenreModel({
+  const MovieGenreModel({
     required this.id,
     required this.name,
   });
@@ -22,7 +22,7 @@ class MovieGenreModel extends Equatable {
       };
 
   MovieGenreEntity toEntity() {
-    return MovieGenreEntity(id: this.id, name: this.name);
+    return MovieGenreEntity(id: id, name: name);
   }
 
   @override

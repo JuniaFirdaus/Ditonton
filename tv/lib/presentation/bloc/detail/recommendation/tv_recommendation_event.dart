@@ -1,4 +1,3 @@
-import 'package:core/domain/entities/movie/movie_detail_entity.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class TvRecommendationEvent extends Equatable {

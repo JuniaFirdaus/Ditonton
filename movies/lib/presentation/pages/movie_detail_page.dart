@@ -14,7 +14,7 @@ import 'package:movies/presentation/bloc/watchlist/watchlist_event.dart';
 import 'package:movies/presentation/bloc/watchlist/watchlist_movies_bloc.dart';
 
 class MovieDetailPage extends StatefulWidget {
-  static const ROUTE_NAME = '/movie-detail';
+  static const routeName = '/movie-detail';
 
   final int id;
 
@@ -221,7 +221,7 @@ class DetailContent extends StatelessWidget {
                                             onTap: () {
                                               Navigator.pushReplacementNamed(
                                                 context,
-                                                MovieDetailPage.ROUTE_NAME,
+                                                MovieDetailPage.routeName,
                                                 arguments: movie.id,
                                               );
                                             },

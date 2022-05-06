@@ -118,7 +118,7 @@ class MovieLocalDataSourceImpl implements MovieLocalDataSource {
   @override
   Future<List<MovieTable>> getCachedNowPlayingMovies() async {
     final result = await databaseHelper.getCacheMovies('now playing');
-    if (result.length > 0) {
+    if (result.isNotEmpty) {
       return result.map((data) => MovieTable.fromMap(data)).toList();
     } else {
       throw CacheException("Can't get the data :(");
@@ -134,7 +134,7 @@ class MovieLocalDataSourceImpl implements MovieLocalDataSource {
   @override
   Future<List<MovieTable>> getCachedPopularMovies() async {
     final result = await databaseHelper.getCacheMovies('popular');
-    if (result.length > 0) {
+    if (result.isNotEmpty) {
       return result.map((data) => MovieTable.fromMap(data)).toList();
     } else {
       throw CacheException("Can't get the data :(");
@@ -150,7 +150,7 @@ class MovieLocalDataSourceImpl implements MovieLocalDataSource {
   @override
   Future<List<MovieTable>> getCachedTopRatedMovies() async {
     final result = await databaseHelper.getCacheMovies('top rated');
-    if (result.length > 0) {
+    if (result.isNotEmpty) {
       return result.map((data) => MovieTable.fromMap(data)).toList();
     } else {
       throw CacheException("Can't get the data :(");
@@ -178,7 +178,7 @@ class MovieLocalDataSourceImpl implements MovieLocalDataSource {
   @override
   Future<List<TvTable>> getCachedNowPlayingTv() async{
     final result = await databaseHelper.getCacheTv('now playing');
-    if (result.length > 0) {
+    if (result.isNotEmpty) {
       return result.map((data) => TvTable.fromMap(data)).toList();
     } else {
       throw CacheException("Can't get the data :(");
@@ -188,7 +188,7 @@ class MovieLocalDataSourceImpl implements MovieLocalDataSource {
   @override
   Future<List<TvTable>> getCachedPopularTv() async {
     final result = await databaseHelper.getCacheTv('popular');
-    if (result.length > 0) {
+    if (result.isNotEmpty) {
       return result.map((data) => TvTable.fromMap(data)).toList();
     } else {
       throw CacheException("Can't get the data :(");
@@ -198,7 +198,7 @@ class MovieLocalDataSourceImpl implements MovieLocalDataSource {
   @override
   Future<List<TvTable>> getCachedTopRatedTv() async {
     final result = await databaseHelper.getCacheTv('top rated');
-    if (result.length > 0) {
+    if (result.isNotEmpty) {
       return result.map((data) => TvTable.fromMap(data)).toList();
     } else {
       throw CacheException("Can't get the data :(");

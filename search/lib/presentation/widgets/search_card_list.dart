@@ -19,13 +19,13 @@ class SearchCard extends StatelessWidget {
           if (isSearchMovies) {
             Navigator.pushNamed(
               context,
-              MOVIE_DETAIL_ROUTE,
+              movieDetailRoute,
               arguments: item.id,
             );
           } else {
             Navigator.pushNamed(
               context,
-              TV_DETAIL_ROUTE,
+              tvDetailRoute,
               arguments: item.id,
             );
           }
@@ -66,7 +66,7 @@ class SearchCard extends StatelessWidget {
               ),
               child: ClipRRect(
                 child: CachedNetworkImage(
-                  imageUrl: '$BASE_IMAGE_URL${item.posterPath}',
+                  imageUrl: '$baseImageUrl${item.posterPath}',
                   width: 80,
                   placeholder: (context, url) => const Center(
                     child: CircularProgressIndicator(),

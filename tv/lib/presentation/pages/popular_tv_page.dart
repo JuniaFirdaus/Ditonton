@@ -6,7 +6,7 @@ import 'package:tv/presentation/bloc/popular/popular_tv_bloc.dart';
 import 'package:tv/presentation/widgets/tv_card_list.dart';
 
 class PopularTvPage extends StatefulWidget {
-  static const ROUTE_NAME = '/popular-tv';
+  static const routeName = '/popular-tv';
 
   const PopularTvPage({Key? key}) : super(key: key);
 

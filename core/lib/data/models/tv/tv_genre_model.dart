@@ -3,7 +3,7 @@ import 'package:equatable/equatable.dart';
 import '../../../domain/entities/tv/tv_genre_entity.dart';
 
 class TvGenreModel extends Equatable {
-  TvGenreModel({
+  const TvGenreModel({
     required this.id,
     required this.name,
   });
@@ -22,7 +22,7 @@ class TvGenreModel extends Equatable {
   };
 
   TvGenreEntity toEntity() {
-    return TvGenreEntity(id: this.id, name: this.name);
+    return TvGenreEntity(id: id, name: name);
   }
 
   @override

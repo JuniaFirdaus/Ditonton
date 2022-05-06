@@ -17,7 +17,7 @@ import '../bloc/popular/popular_event.dart';
 import '../bloc/toprated/top_rated_event.dart';
 
 class HomeTvPage extends StatefulWidget {
-  static const ROUTE_NAME = '/home-tv';
+  static const routeName = '/home-tv';
 
   const HomeTvPage({Key? key}) : super(key: key);
 
@@ -44,7 +44,7 @@ class _HomeTvPageState extends State<HomeTvPage> {
         actions: [
           IconButton(
             onPressed: () {
-              Navigator.pushNamed(context, SEARCH_ROUTE, arguments: false);
+              Navigator.pushNamed(context, searchRoute, arguments: false);
             },
             icon: const Icon(Icons.search),
           )
@@ -75,7 +75,7 @@ class _HomeTvPageState extends State<HomeTvPage> {
                 _buildSubHeading(
                   title: 'Popular',
                   onTap: () =>
-                      Navigator.pushNamed(context, PopularTvPage.ROUTE_NAME),
+                      Navigator.pushNamed(context, PopularTvPage.routeName),
                 ),
                 BlocBuilder<PopularTvBloc, StateRequest>(
                     builder: (context, state) {
@@ -96,7 +96,7 @@ class _HomeTvPageState extends State<HomeTvPage> {
                 _buildSubHeading(
                   title: 'Top Rated',
                   onTap: () =>
-                      Navigator.pushNamed(context, TopRatedTvPage.ROUTE_NAME),
+                      Navigator.pushNamed(context, TopRatedTvPage.routeName),
                 ),
                 BlocBuilder<TopRatedTvBloc, StateRequest>(
                     builder: (context, state) {
@@ -157,14 +157,14 @@ class TvList extends StatelessWidget {
               onTap: () {
                 Navigator.pushNamed(
                   context,
-                  TvDetailPage.ROUTE_NAME,
+                  TvDetailPage.routeName,
                   arguments: item.id,
                 );
               },
               child: ClipRRect(
                 borderRadius: const BorderRadius.all(Radius.circular(16)),
                 child: CachedNetworkImage(
-                  imageUrl: '$BASE_IMAGE_URL${item.posterPath}',
+                  imageUrl: '$baseImageUrl${item.posterPath}',
                   placeholder: (context, url) => const Center(
                     child: CircularProgressIndicator(),
                   ),

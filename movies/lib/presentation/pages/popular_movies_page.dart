@@ -7,7 +7,7 @@ import 'package:movies/presentation/widgets/movie_card_list.dart';
 import '../bloc/popular/popular_event.dart';
 
 class PopularMoviesPage extends StatefulWidget {
-  static const ROUTE_NAME = '/popular-movie';
+  static const routeName = '/popular-movie';
 
   const PopularMoviesPage({Key? key}) : super(key: key);
 
