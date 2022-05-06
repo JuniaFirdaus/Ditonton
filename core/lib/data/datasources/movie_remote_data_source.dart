@@ -1,9 +1,6 @@
 import 'dart:convert';
-import 'dart:io';
 import 'package:core/utils/exception.dart';
-import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
-import 'package:http/io_client.dart';
 
 import '../models/movie/movie_detail_model.dart';
 import '../models/movie/movie_model.dart';
@@ -39,29 +36,17 @@ abstract class MovieRemoteDataSource {
 }
 
 class MovieRemoteDataSourceImpl implements MovieRemoteDataSource {
-  static const apiKey = 'apiKey=2174d146bb9c0eab47529b2e77d6b526';
-  static const baseUrl = 'https://api.themoviedb.org/3';
+  static const API_KEY = 'api_key=2174d146bb9c0eab47529b2e77d6b526';
+  static const BASE_URL = 'https://api.themoviedb.org/3';
 
   final http.Client client;
 
   MovieRemoteDataSourceImpl({required this.client});
 
-  Future<SecurityContext> get globalContext async {
-    final sslCert = await rootBundle.load('certificate/certificates.pem');
-    SecurityContext securityContext = SecurityContext(withTrustedRoots: false);
-    securityContext.setTrustedCertificatesBytes(sslCert.buffer.asInt8List());
-    return securityContext;
-  }
-
   @override
   Future<List<MovieModel>> getNowPlayingMovies() async {
-    HttpClient client = HttpClient(context: await globalContext);
-    client.badCertificateCallback =
-        (X509Certificate cert, String host, int port) => false;
-    IOClient ioClient = IOClient(client);
-
     final response =
-        await ioClient.get(Uri.parse('$baseUrl/movie/now_playing?$apiKey'));
+        await client.get(Uri.parse('$BASE_URL/movie/now_playing?$API_KEY'));
 
     if (response.statusCode == 200) {
       return MovieResponse.fromJson(json.decode(response.body)).movieList;
@@ -72,13 +57,8 @@ class MovieRemoteDataSourceImpl implements MovieRemoteDataSource {
 
   @override
   Future<MovieDetailResponse> getMovieDetail(int id) async {
-    HttpClient client = HttpClient(context: await globalContext);
-    client.badCertificateCallback =
-        (X509Certificate cert, String host, int port) => false;
-    IOClient ioClient = IOClient(client);
-
     final response =
-        await ioClient.get(Uri.parse('$baseUrl/movie/$id?$apiKey'));
+        await client.get(Uri.parse('$BASE_URL/movie/$id?$API_KEY'));
 
     if (response.statusCode == 200) {
       return MovieDetailResponse.fromJson(json.decode(response.body));
@@ -89,13 +69,8 @@ class MovieRemoteDataSourceImpl implements MovieRemoteDataSource {
 
   @override
   Future<List<MovieModel>> getMovieRecommendations(int id) async {
-    HttpClient client = HttpClient(context: await globalContext);
-    client.badCertificateCallback =
-        (X509Certificate cert, String host, int port) => false;
-    IOClient ioClient = IOClient(client);
-
-    final response = await ioClient
-        .get(Uri.parse('$baseUrl/movie/$id/recommendations?$apiKey'));
+    final response = await client
+        .get(Uri.parse('$BASE_URL/movie/$id/recommendations?$API_KEY'));
 
     if (response.statusCode == 200) {
       return MovieResponse.fromJson(json.decode(response.body)).movieList;
@@ -106,13 +81,8 @@ class MovieRemoteDataSourceImpl implements MovieRemoteDataSource {
 
   @override
   Future<List<MovieModel>> getPopularMovies() async {
-    HttpClient client = HttpClient(context: await globalContext);
-    client.badCertificateCallback =
-        (X509Certificate cert, String host, int port) => false;
-    IOClient ioClient = IOClient(client);
-
     final response =
-        await ioClient.get(Uri.parse('$baseUrl/movie/popular?$apiKey'));
+        await client.get(Uri.parse('$BASE_URL/movie/popular?$API_KEY'));
 
     if (response.statusCode == 200) {
       return MovieResponse.fromJson(json.decode(response.body)).movieList;
@@ -123,13 +93,8 @@ class MovieRemoteDataSourceImpl implements MovieRemoteDataSource {
 
   @override
   Future<List<MovieModel>> getTopRatedMovies() async {
-    HttpClient client = HttpClient(context: await globalContext);
-    client.badCertificateCallback =
-        (X509Certificate cert, String host, int port) => false;
-    IOClient ioClient = IOClient(client);
-
     final response =
-        await ioClient.get(Uri.parse('$baseUrl/movie/top_rated?$apiKey'));
+        await client.get(Uri.parse('$BASE_URL/movie/top_rated?$API_KEY'));
 
     if (response.statusCode == 200) {
       return MovieResponse.fromJson(json.decode(response.body)).movieList;
@@ -140,13 +105,8 @@ class MovieRemoteDataSourceImpl implements MovieRemoteDataSource {
 
   @override
   Future<List<MovieModel>> searchMovies(String query) async {
-    HttpClient client = HttpClient(context: await globalContext);
-    client.badCertificateCallback =
-        (X509Certificate cert, String host, int port) => false;
-    IOClient ioClient = IOClient(client);
-
-    final response = await ioClient
-        .get(Uri.parse('$baseUrl/search/movie?$apiKey&query=$query'));
+    final response = await client
+        .get(Uri.parse('$BASE_URL/search/movie?$API_KEY&query=$query'));
 
     if (response.statusCode == 200) {
       return MovieResponse.fromJson(json.decode(response.body)).movieList;
@@ -157,13 +117,8 @@ class MovieRemoteDataSourceImpl implements MovieRemoteDataSource {
 
   @override
   Future<List<TvModel>> getPopularTv() async {
-    HttpClient client = HttpClient(context: await globalContext);
-    client.badCertificateCallback =
-        (X509Certificate cert, String host, int port) => false;
-    IOClient ioClient = IOClient(client);
-
     final response =
-        await ioClient.get(Uri.parse('$baseUrl/tv/popular?$apiKey'));
+        await client.get(Uri.parse('$BASE_URL/tv/popular?$API_KEY'));
     if (response.statusCode == 200) {
       return TvResponse.fromJson(json.decode(response.body)).results;
     } else {
@@ -173,13 +128,8 @@ class MovieRemoteDataSourceImpl implements MovieRemoteDataSource {
 
   @override
   Future<List<TvModel>> getTopRatedTv() async {
-    HttpClient client = HttpClient(context: await globalContext);
-    client.badCertificateCallback =
-        (X509Certificate cert, String host, int port) => false;
-    IOClient ioClient = IOClient(client);
-
     final response =
-        await ioClient.get(Uri.parse('$baseUrl/tv/top_rated?$apiKey'));
+        await client.get(Uri.parse('$BASE_URL/tv/top_rated?$API_KEY'));
     if (response.statusCode == 200) {
       return TvResponse.fromJson(json.decode(response.body)).results;
     } else {
@@ -189,13 +139,8 @@ class MovieRemoteDataSourceImpl implements MovieRemoteDataSource {
 
   @override
   Future<List<TvModel>> getNowPlayingTv() async {
-    HttpClient client = HttpClient(context: await globalContext);
-    client.badCertificateCallback =
-        (X509Certificate cert, String host, int port) => false;
-    IOClient ioClient = IOClient(client);
-
     final response =
-        await ioClient.get(Uri.parse('$baseUrl/tv/airing_today?$apiKey'));
+        await client.get(Uri.parse('$BASE_URL/tv/airing_today?$API_KEY'));
     if (response.statusCode == 200) {
       return TvResponse.fromJson(json.decode(response.body)).results;
     } else {
@@ -205,13 +150,8 @@ class MovieRemoteDataSourceImpl implements MovieRemoteDataSource {
 
   @override
   Future<List<TvModel>> searchTv(String query) async {
-    HttpClient client = HttpClient(context: await globalContext);
-    client.badCertificateCallback =
-        (X509Certificate cert, String host, int port) => false;
-    IOClient ioClient = IOClient(client);
-
-    final response = await ioClient
-        .get(Uri.parse('$baseUrl/search/tv?$apiKey&query=$query'));
+    final response = await client
+        .get(Uri.parse('$BASE_URL/search/tv?$API_KEY&query=$query'));
     if (response.statusCode == 200) {
       return TvResponse.fromJson(json.decode(response.body)).results;
     } else {
@@ -221,13 +161,8 @@ class MovieRemoteDataSourceImpl implements MovieRemoteDataSource {
 
   @override
   Future<TvDetailResponse> getTvDetail(int id) async {
-    HttpClient client = HttpClient(context: await globalContext);
-    client.badCertificateCallback =
-        (X509Certificate cert, String host, int port) => false;
-    IOClient ioClient = IOClient(client);
-
     final response =
-        await ioClient.get(Uri.parse('$baseUrl/tv/$id?$apiKey'));
+        await client.get(Uri.parse('$BASE_URL/tv/$id?$API_KEY'));
 
     if (response.statusCode == 200) {
       return TvDetailResponse.fromJson(json.decode(response.body));
@@ -238,13 +173,8 @@ class MovieRemoteDataSourceImpl implements MovieRemoteDataSource {
 
   @override
   Future<List<TvModel>> getTvRecommendations(int id)async {
-    HttpClient client = HttpClient(context: await globalContext);
-    client.badCertificateCallback =
-        (X509Certificate cert, String host, int port) => false;
-    IOClient ioClient = IOClient(client);
-
-    final response = await ioClient
-        .get(Uri.parse('$baseUrl/tv/$id/recommendations?$apiKey'));
+    final response = await client
+        .get(Uri.parse('$BASE_URL/tv/$id/recommendations?$API_KEY'));
     if (response.statusCode == 200) {
       return TvResponse.fromJson(json.decode(response.body)).results;
     } else {
