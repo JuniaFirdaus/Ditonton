@@ -9,18 +9,18 @@ import '../../json_reader.dart';
 void main() {
   final tMovieModel = MovieModel(
     adult: false,
-    backdropPath: "/path.jpg",
-    genreIds: [1, 2, 3, 4],
-    id: 1,
-    originalTitle: "Original Title",
-    overview: "Overview",
-    popularity: 1.0,
-    posterPath: "/path.jpg",
-    releaseDate: "2020-05-05",
-    title: "Title",
+    backdropPath: "/egoyMDLqCxzjnSrWOz50uLlJWmD.jpg",
+    genreIds: [28, 878, 35, 10751, 12],
+    id: 675353,
+    originalTitle: "Sonic the Hedgehog 2",
+    overview: "After settling in Green Hills, Sonic s eager to prove he has what it takes to be a true hero. His test comes when Dr. Robotnik returns, this time with a new partner, Knuckles, in search for an emerald that has the power to destroy civilizations. Sonic teams up with his own sidekick, Tails, and together they embark on a globe-trotting journey to find the emerald before it falls into the wrong hands.",
+    popularity: 10135.117,
+    posterPath: "/6DrHO1jr3qVrViUO6s6kFiAGM7.jpg",
+    releaseDate: "2022-03-30",
+    title: "Sonic the Hedgehog 2",
     video: false,
-    voteAverage: 1.0,
-    voteCount: 1,
+    voteAverage: 7.7,
+    voteCount: 1019,
   );
   final tMovieResponseModel =
       MovieResponse(movieList: <MovieModel>[tMovieModel]);
@@ -47,18 +47,20 @@ void main() {
         "results": [
           {
             "adult": false,
-            "backdrop_path": "/path.jpg",
-            "genre_ids": [1, 2, 3, 4],
-            "id": 1,
-            "original_title": "Original Title",
-            "overview": "Overview",
-            "popularity": 1.0,
-            "poster_path": "/path.jpg",
-            "release_date": "2020-05-05",
-            "title": "Title",
+            "backdrop_path": "/egoyMDLqCxzjnSrWOz50uLlJWmD.jpg",
+            "genre_ids": [
+              28, 878, 35, 10751, 12
+            ],
+            "id": 675353,
+            "original_title": "Sonic the Hedgehog 2",
+            "overview": "After settling in Green Hills, Sonic s eager to prove he has what it takes to be a true hero. His test comes when Dr. Robotnik returns, this time with a new partner, Knuckles, in search for an emerald that has the power to destroy civilizations. Sonic teams up with his own sidekick, Tails, and together they embark on a globe-trotting journey to find the emerald before it falls into the wrong hands.",
+            "popularity": 10135.117,
+            "poster_path": "/6DrHO1jr3qVrViUO6s6kFiAGM7.jpg",
+            "release_date": "2022-03-30",
+            "title": "Sonic the Hedgehog 2",
             "video": false,
-            "vote_average": 1.0,
-            "vote_count": 1
+            "vote_average": 7.7,
+            "vote_count": 1019
           }
         ],
       };
