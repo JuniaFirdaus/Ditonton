@@ -3,7 +3,7 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:movies/domain/usecases/get_movie_recommendations.dart';
-import '../../../../test/helpers/test_helper.mocks.dart';
+import '../../helpers/test_helper.mocks.dart';
 
 
 void main() {

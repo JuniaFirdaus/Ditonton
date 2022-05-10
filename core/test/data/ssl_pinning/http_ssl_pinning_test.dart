@@ -8,7 +8,7 @@ void main() {
 
   group('SSL Pinning tests', () {
     test('should get response 200 when connection succeeded', () async {
-      final client = await Shared.createLEClient(isTestMode: true);
+      final client = await Shared.createLEClient(isTestMode: false);
       final response = await client
           .get(Uri.parse('$BASE_URL/movie/now_playing?$API_KEY'));
 

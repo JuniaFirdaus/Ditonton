@@ -5,7 +5,7 @@ import 'package:core/domain/entities/movie/movie_detail_entity.dart';
 import 'package:core/domain/entities/movie/movie_entity.dart';
 import 'package:core/domain/entities/movie/movie_genre_entity.dart';
 
-final tMovieModel = MovieModel(
+const tMovieModel = MovieModel(
   adult: false,
   backdropPath: '/muth4OYamXf41G2evdrLEg8d3om.jpg',
   genreIds: [14, 28],
@@ -25,7 +25,7 @@ final tMovieModel = MovieModel(
 final tMovie = MovieEntity(
   adult: false,
   backdropPath: '/muth4OYamXf41G2evdrLEg8d3om.jpg',
-  genreIds: [14, 28],
+  genreIds: const [14, 28],
   id: 557,
   originalTitle: 'Spider-Man',
   overview:
@@ -42,7 +42,7 @@ final tMovie = MovieEntity(
 final testMovie = MovieEntity(
   adult: false,
   backdropPath: '/muth4OYamXf41G2evdrLEg8d3om.jpg',
-  genreIds: [14, 28],
+  genreIds: const [14, 28],
   id: 557,
   originalTitle: 'Spider-Man',
   overview:
@@ -58,7 +58,7 @@ final testMovie = MovieEntity(
 
 final testMovieList = [testMovie];
 
-final testMovieDetail = MovieDetailEntity(
+const testMovieDetail = MovieDetailEntity(
   adult: false,
   backdropPath: 'backdropPath',
   genres: [MovieGenreEntity(id: 1, name: 'Action')],
@@ -80,7 +80,7 @@ final testWatchlistMovie = MovieEntity.watchlist(
   overview: 'overview',
 );
 
-final testMovieTable = MovieTable(
+const testMovieTable = MovieTable(
   id: 1,
   title: 'title',
   posterPath: 'posterPath',
@@ -94,7 +94,7 @@ final testMovieMap = {
   'title': 'title',
 };
 
-final testMovieCache = MovieTable(
+const testMovieCache = MovieTable(
   id: 557,
   title: 'Spider-Man',
   posterPath: '/rweIrveL43TaxUN0akQEaAXL6x0.jpg',

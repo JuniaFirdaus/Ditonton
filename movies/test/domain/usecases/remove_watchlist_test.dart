@@ -3,7 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:movies/domain/usecases/remove_watchlist_movie.dart';
 
-import '../../../../test/helpers/test_helper.mocks.dart';
+import '../../helpers/test_helper.mocks.dart';
 import '../../dummy_data/dummy_objects_movies.dart';
 
 void main() {

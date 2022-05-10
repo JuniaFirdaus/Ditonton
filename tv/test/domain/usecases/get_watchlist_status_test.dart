@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:tv/domain/usecases/get_watchlist_status_tv.dart';
-import '../../../../test/helpers/test_helper.mocks.dart';
+import '../../helper/test_helper.mocks.dart';
 
 void main() {
   late GetWatchListStatusTv usecase;

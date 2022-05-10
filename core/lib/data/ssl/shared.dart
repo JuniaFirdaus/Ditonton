@@ -17,11 +17,10 @@ class Shared {
         certFileBytes = utf8.encode(_certificatedString);
       } else {
         try {
-          certFileBytes =
-              (await rootBundle.load('certificates/certificate_cert_out.pem'))
-                  .buffer
-                  .asInt8List();
-          log('Successfully access and load certificate_cert_out.pem file!');
+          certFileBytes = (await rootBundle.load('certificates/certificate_cert_out.pem'))
+              .buffer
+              .asInt8List();
+          log(rootBundle.load('certificates/certificate_cert_out.pem').toString());
         } catch (e) {
           certFileBytes = utf8.encode(_certificatedString);
           log('Error access and load certificate_cert_out.pem file.\n${e.toString()}');
@@ -51,7 +50,7 @@ class Shared {
 
   static Future<http.Client> createLEClient({bool isTestMode = false}) async {
     IOClient client =
-    IOClient(await Shared.customHttpClient(isTestMode: isTestMode));
+        IOClient(await Shared.customHttpClient(isTestMode: isTestMode));
     return client;
   }
 }
