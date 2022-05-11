@@ -10,10 +10,9 @@ import 'package:mockito/mockito.dart';
 
 import '../../helpers/test_helper.mocks.dart';
 import '../../json_reader.dart';
-import '../ssl_pinning/shared.dart';
 
 void main() {
-  const apiKey = 'apiKey=2174d146bb9c0eab47529b2e77d6b526';
+  const apiKey = 'api_key=2174d146bb9c0eab47529b2e77d6b526';
   const baseUrl = 'https://api.themoviedb.org/3';
 
   late MovieRemoteDataSourceImpl dataSource;
@@ -31,37 +30,56 @@ void main() {
 
     test('should return list of Movie Model when the response is success',
         () async {
-      final client = await Shared.createLEClient(isTestMode: true);
-
       // arrange
-      when(await client
-          .get(Uri.parse('$baseUrl/movie/now_playing?$apiKey'))
-          .whenComplete(() =>
-              http.Response(readJson('dummy_data/movie_now_playing.json'), 200)));
+      when(mockHttpClient.get(Uri.parse('$baseUrl/movie/now_playing?$apiKey')))
+          .thenAnswer((_) async => http.Response(
+              readJson('dummy_data/movie_now_playing.json'), 200));
 
       // act
       final result = await dataSource.getNowPlayingMovies();
       // assert
-      expect(result.isNotEmpty, tMovieList.isNotEmpty);
+      expect(result, tMovieList);
+    });
+
+    test(
+        'should throw a ServerException when the response code is 404 or other',
+        () async {
+      // arrange
+      when(mockHttpClient.get(Uri.parse('$baseUrl/movie/now_playing?$apiKey')))
+          .thenAnswer((_) async => http.Response('Not Found', 404));
+      // act
+      final call = dataSource.getNowPlayingMovies();
+      // assert
+      expect(() => call, throwsA(isA<ServerException>()));
     });
   });
 
   group('get Popular Movies', () {
-    final tMovieList =
-        MovieResponse.fromJson(json.decode(readJson('dummy_data/movie_popular.json')))
-            .movieList;
+    final tMovieList = MovieResponse.fromJson(
+            json.decode(readJson('dummy_data/movie_popular.json')))
+        .movieList;
 
     test('should return list of movies when response is success', () async {
-      final client = await Shared.createLEClient(isTestMode: true);
       // arrange
-      when(await client
-          .get(Uri.parse('$baseUrl/movie/popular?$apiKey'))
-          .whenComplete(
-              () => http.Response(readJson('dummy_data/movie_popular.json'), 200)));
+      when(mockHttpClient.get(Uri.parse('$baseUrl/movie/popular?$apiKey')))
+          .thenAnswer((_) async =>
+              http.Response(readJson('dummy_data/movie_popular.json'), 200));
       // act
       final result = await dataSource.getPopularMovies();
       // assert
-      expect(result.isNotEmpty, tMovieList.isNotEmpty);
+      expect(result, tMovieList);
+    });
+
+    test(
+        'should throw a ServerException when the response code is 404 or other',
+        () async {
+      // arrange
+      when(mockHttpClient.get(Uri.parse('$baseUrl/movie/popular?$apiKey')))
+          .thenAnswer((_) async => http.Response('Not Found', 404));
+      // act
+      final call = dataSource.getPopularMovies();
+      // assert
+      expect(() => call, throwsA(isA<ServerException>()));
     });
   });
 
@@ -71,16 +89,25 @@ void main() {
         .movieList;
 
     test('should return list of movies when response is success ', () async {
-      final client = await Shared.createLEClient(isTestMode: true);
       // arrange
-      when(client
-          .get(Uri.parse('$baseUrl/movie/top_rated?$apiKey'))
-          .whenComplete(
-              () => http.Response(readJson('dummy_data/movie_top_rated.json'), 200)));
+      when(mockHttpClient.get(Uri.parse('$baseUrl/movie/top_rated?$apiKey')))
+          .thenAnswer((_) async =>
+              http.Response(readJson('dummy_data/movie_top_rated.json'), 200));
       // act
       final result = await dataSource.getTopRatedMovies();
       // assert
       expect(result.isNotEmpty, tMovieList.isNotEmpty);
+    });
+
+    test('should throw ServerException when response code is other than 200',
+        () async {
+      // arrange
+      when(mockHttpClient.get(Uri.parse('$baseUrl/movie/top_rated?$apiKey')))
+          .thenAnswer((_) async => http.Response('Not Found', 404));
+      // act
+      final call = dataSource.getTopRatedMovies();
+      // assert
+      expect(() => call, throwsA(isA<ServerException>()));
     });
   });
 
@@ -89,12 +116,10 @@ void main() {
         json.decode(readJson('dummy_data/movie_detail.json')));
 
     test('should return movie detail when the response code is 200', () async {
-      final client = await Shared.createLEClient(isTestMode: true);
       // arrange
-      when(client
-          .get(Uri.parse('$baseUrl/movie/675353?$apiKey'))
-          .whenComplete(() =>
-              http.Response(readJson('dummy_data/movie_detail.json'), 200)));
+      when(mockHttpClient.get(Uri.parse('$baseUrl/movie/675353?$apiKey')))
+          .thenAnswer((_) async =>
+              http.Response(readJson('dummy_data/movie_detail.json'), 200));
       // act
       final result = await dataSource.getMovieDetail(675353);
       // assert
@@ -103,11 +128,9 @@ void main() {
 
     test('should throw Server Exception when the response code is 404 or other',
         () async {
-      final client = await Shared.createLEClient(isTestMode: true);
       // arrange
-      when(client
-          .get(Uri.parse('$baseUrl/movie/1?$apiKey'))
-          .whenComplete(() => http.Response('Not Found', 404)));
+      when(mockHttpClient.get(Uri.parse('$baseUrl/movie/1?$apiKey')))
+          .thenAnswer((_) async => http.Response('Not Found', 404));
       // act
       final call = dataSource.getMovieDetail(1);
       // assert
@@ -122,25 +145,23 @@ void main() {
 
     test('should return list of Movie Model when the response is success',
         () async {
-      final client = await Shared.createLEClient(isTestMode: true);
       // arrange
-      when(client
-          .get(Uri.parse('$baseUrl/movie/675353/recommendations?$apiKey'))
-          .whenComplete(() async => http.Response(
-              readJson('dummy_data/movie_recommendations.json'), 200)));
+      when(mockHttpClient
+              .get(Uri.parse('$baseUrl/movie/675353/recommendations?$apiKey')))
+          .thenAnswer((_) async => http.Response(
+              readJson('dummy_data/movie_recommendations.json'), 200));
       // act
       final result = await dataSource.getMovieRecommendations(675353);
       // assert
-      expect(result.isNotEmpty, equals(tMovieList.isNotEmpty));
+      expect(result, equals(tMovieList));
     });
 
     test('should throw Server Exception when the response code is 404 or other',
         () async {
-      final client = await Shared.createLEClient(isTestMode: true);
       // arrange
-      when(client
-          .get(Uri.parse('$baseUrl/movie/1/recommendations?$apiKey'))
-          .whenComplete(() async => http.Response('Not Found', 404)));
+      when(mockHttpClient
+              .get(Uri.parse('$baseUrl/movie/1/recommendations?$apiKey')))
+          .thenAnswer((_) async => http.Response('Not Found', 404));
       // act
       final call = dataSource.getMovieRecommendations(1);
       // assert
@@ -154,12 +175,11 @@ void main() {
         .movieList;
 
     test('should return list of movies when response is success', () async {
-      final client = await Shared.createLEClient(isTestMode: true);
       // arrange
-      when(client
-          .get(Uri.parse('$baseUrl/search/movie?$apiKey&query=Spiderman'))
-          .whenComplete(() async => http.Response(
-              readJson('dummy_data/movie_search_spiderman.json'), 200)));
+      when(mockHttpClient
+              .get(Uri.parse('$baseUrl/search/movie?$apiKey&query=Spiderman')))
+          .thenAnswer((_) async => http.Response(
+              readJson('dummy_data/movie_search_spiderman.json'), 200));
       // act
       final result = await dataSource.searchMovies('Spiderman');
       // assert
@@ -168,15 +188,14 @@ void main() {
 
     test('should throw ServerException when response code is other than 200',
         () async {
-          final client = await Shared.createLEClient(isTestMode: true);
       // arrange
-      when(client
-              .get(Uri.parse('$baseUrl/search/movie?$apiKey&query=1'))
-          .whenComplete(() async => http.Response('Not Found', 404)));
+      when(mockHttpClient
+              .get(Uri.parse('$baseUrl/search/movie?$apiKey&query=Spiderman')))
+          .thenAnswer((_) async => http.Response('Not Found', 404));
       // act
-      final call = await dataSource.searchMovies('2@123');
+      final call = dataSource.searchMovies('Spiderman');
       // assert
-      expect(call.isEmpty, true);
+      expect(() => call, throwsA(isA<ServerException>()));
     });
   });
 }

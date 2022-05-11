@@ -1,5 +1,6 @@
 import 'package:about/about_page.dart';
 import 'package:core/core.dart';
+import 'package:core/data/ssl/http_ssl_pinning.dart';
 import 'package:core/utils/utils.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
@@ -36,6 +37,7 @@ import 'package:watchlist/presentation/pages/watchlist_page.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  await HttpSSLPinning.init();
   di.init();
   runApp(MyApp());
 }
